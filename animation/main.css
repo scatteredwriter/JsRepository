@@ -1,0 +1,13 @@
+.contextMenu{
+    background-color: crimson;
+    color: white;
+    position: absolute;
+    opacity: 0;
+    height: 120px;
+    width: 100px;
+    font-size: 20px;
+}
+
+.contextMenu ul{
+    margin-top: 20px;
+}
