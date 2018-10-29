@@ -3,12 +3,12 @@
  * @param {any} object 
  * @param {number} time 
  * @param {number} intervel 
- * @returns {(show :boolean, startHandler :Function, completeHander :Function) => void}
+ * @returns {(show :boolean, startHandler :Function, completeHandler :Function) => void}
  */
 function createOpacityAnimation(object, time, intervel) {
     let onAnimation = false;
     let timerIntervel;
-    return function (show, startHandler, completeHander) {
+    return function (show, startHandler, completeHandler) {
         if (!object) {
             return;
         }
@@ -43,16 +43,16 @@ function createOpacityAnimation(object, time, intervel) {
                 window.clearInterval(timerIntervel);
                 object.style.opacity = to;
                 onAnimation = false;
-                if (completeHander) {
-                    completeHander();
+                if (completeHandler) {
+                    completeHandler();
                 }
             } else if (!show && cur <= to) {
                 console.log('cur <= to');
                 window.clearInterval(timerIntervel);
                 object.style.opacity = to;
                 onAnimation = false;
-                if (completeHander) {
-                    completeHander();
+                if (completeHandler) {
+                    completeHandler();
                 }
             } else if (show) {
                 onAnimation = true;
