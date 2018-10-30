@@ -36,36 +36,35 @@ function createOpacityAnimation(object, time, intervel) {
             object.style.opacity = from;
         }
         let cur = from;
-        timerIntervel = window.setInterval(function () {
-            console.log('object.style.opacity = ' + object.style.opacity);
-            if (show && cur >= to) {
-                console.log('cur >= to');
-                window.clearInterval(timerIntervel);
-                object.style.opacity = to;
-                onAnimation = false;
-                if (completeHandler) {
-                    completeHandler();
+        new Promise(function (resolve, reject) {
+            timerIntervel = window.setInterval(function () {
+                console.log('object.style.opacity = ' + object.style.opacity);
+                if (show && cur >= to) {
+                    console.log('cur >= to');
+                    resolve(to);
+                } else if (!show && cur <= to) {
+                    console.log('cur <= to');
+                    resolve(to);
+                } else if (show) {
+                    onAnimation = true;
+                    object.style.opacity = cur;
+                    cur += 1.0 / (time / intervel);
+                    console.log("show: " + cur);
+                } else if (!show) {
+                    onAnimation = true;
+                    object.style.opacity = cur;
+                    cur -= 1.0 / (time / intervel);
+                    console.log('!show: ' + cur);
                 }
-            } else if (!show && cur <= to) {
-                console.log('cur <= to');
-                window.clearInterval(timerIntervel);
-                object.style.opacity = to;
-                onAnimation = false;
-                if (completeHandler) {
-                    completeHandler();
-                }
-            } else if (show) {
-                onAnimation = true;
-                object.style.opacity = cur;
-                cur += 1.0 / (time / intervel);
-                console.log("show: " + cur);
-            } else if (!show) {
-                onAnimation = true;
-                object.style.opacity = cur;
-                cur -= 1.0 / (time / intervel);
-                console.log('!show: ' + cur);
+            }, intervel);
+        }).then(function (to) {
+            window.clearInterval(timerIntervel);
+            object.style.opacity = to;
+            onAnimation = false;
+            if (completeHandler) {
+                completeHandler();
             }
-        }, intervel);
+        });
     };
 }
 
